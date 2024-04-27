@@ -6,20 +6,12 @@ import java.util.Scanner;
 
 public class Lottery extends Thread {
 	
-	private int[] values;
+	private int[] values = new int[61];
 	private static int bet, num1, num2, num3;
 	
 	public Lottery() {
-		values = new int[] {0, 1, 2, 3, 4, 5, 6, 7, 
-							 8, 9, 10, 11, 12, 13, 14, 15,
-							 16, 17, 18, 19, 20, 21, 22, 23, 
-							 24, 25, 26, 27, 28, 29, 30, 31,
-							 32, 33, 34, 35, 36, 37, 38, 39,
-							 40, 41, 42, 43, 44, 45, 46, 47,
-							 48, 49, 50, 51, 52, 53, 54, 55,
-							 56, 57, 58, 59, 60};
+		initializeArray();
 	}
-	
 	
 	public void run() {
 		
@@ -65,7 +57,6 @@ public class Lottery extends Thread {
 		
 	}
 	
-	
 	private void mix(int[] arr) {
 		
 		int index;
@@ -83,17 +74,24 @@ public class Lottery extends Thread {
 		
 	}
 	
+	private void initializeArray() {
+		for(int i = 0; i < 60; i++) {
+			values[i] = i;
+		}
+	}
 	
-	public static void main(String[] args) throws NegativeNumberException {
+	public static void main(String[] args) {
 		
 		Lottery l = new Lottery();
 		int scan = 0;
 		
 		try (Scanner in = new Scanner(System.in)) {
 			System.out.println("Welcome! - Write the amount to bet (integer number) and then press ENTER - ctrl + Z to exit (ctrl + C in Unix)");
+			
 			try {
 				scan = in.nextInt();
 				bet = scan;
+				
 				while(scan >= 0) {
 					System.out.println("Write the first number (from 0 to 60) to bet and then press ENTER");
 					scan = in.nextInt();
@@ -109,15 +107,15 @@ public class Lottery extends Thread {
 					l.start();
 					scan = in.nextInt();
 				}
+				
 			} catch(InputMismatchException e) {
 				e.printStackTrace();
 			} catch(NoSuchElementException ex) {
 				ex.printStackTrace();
 			}
 			
-			// To avoid negative numbers during bet
 			if(scan < 0) {
-				throw new NegativeNumberException("Invalid input - Please, don't bet negative amounts!");
+				throw new IllegalArgumentException("Bet cannot be negative");
 			}
 		}
 		
