@@ -19,6 +19,7 @@ public class Lottery extends Thread {
 		mix(values);
 		
 		for(int i = 0; i <= 15; i++) {
+			
 			if(values[i] == num1 || values[i] == num2 || values[i] == num3) {
 				System.out.println(values[i] + " You got it right! (" + counter1++ + ")");
 				counter2++;
@@ -29,12 +30,15 @@ public class Lottery extends Thread {
 			
 			try {
 				sleep(700);
+				
 			} catch(InterruptedException e) {
 				e.printStackTrace();
 			}
+			
 		}
 		
 		switch(counter2) {
+		
 			case 0:
 				bet = 0;
 				System.out.println("You acerted " + counter2 + " numbers. Profits: $" + bet);
@@ -51,6 +55,7 @@ public class Lottery extends Thread {
 				bet = bet * 3 ;
 				System.out.println("You acerted " + counter2 + " numbers. Profits: $" + bet);
 				break;
+				
 		}
 		
 		System.out.println("Press ctrl + Z to exit (ctrl + C in Unix)");
